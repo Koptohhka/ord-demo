@@ -1,6 +1,15 @@
 import styles from './OrganizationInfo.module.css';
+import mapImage from "../assets/img/completed-google-places-label.png";
 
-export const OrganizationInfo = () => {
+export const OrganizationInfo = ({ selectedNode }) => {
+  if (!selectedNode) {
+    return null;
+  }
+
+  const { data } = selectedNode;
+
+  console.log(selectedNode.data, "props.selectedNode")
+
   const organizationData = {
     general: {
       name: 'AVA',
@@ -38,48 +47,37 @@ export const OrganizationInfo = () => {
         
         <div className={styles.field}>
           <span className={styles.fieldLabel}>Name:</span>
-          <span className={styles.fieldValue}>{organizationData.general.name}</span>
+          <span className={styles.fieldValue}>{data.name}</span>
         </div>
 
         <div className={styles.field}>
           <span className={styles.fieldLabel}>Address:</span>
-          <div className={styles.nestedField}>
-            <div>Street: {organizationData.general.address.street}</div>
-            <div>Postal code: {organizationData.general.address.postalCode}</div>
-            <div>City: {organizationData.general.address.city}</div>
-            <div>Country: {organizationData.general.address.country}</div>
-          </div>
+          <span className={styles.fieldValue}>{data.address}</span>
         </div>
 
         <div className={styles.field}>
           <span className={styles.fieldLabel}>Contest name:</span>
-          <span className={styles.fieldValue}>{organizationData.general.contest.name}</span>
+          <span className={styles.fieldValue}>{data["Contest name"]}</span>
         </div>
 
         <div className={styles.field}>
           <span className={styles.fieldLabel}>Contest phone:</span>
-          <span className={styles.fieldValue}>{organizationData.general.contest.phone}</span>
+          <span className={styles.fieldValue}>{data["Contest phone"]}</span>
         </div>
 
         <div className={styles.field}>
           <span className={styles.fieldLabel}>GPS:</span>
-          <span className={styles.fieldValue}>{organizationData.general.gps}</span>
         </div>
 
         <div className={styles.coordinates}>
           <div className={styles.coordItem}>
-            Latitude: {organizationData.general.coordinates.lat}
-          </div>
-          <div className={styles.coordItem}>
-            Longitude: {organizationData.general.coordinates.lng}
+            Latitude, Longitude: {data["Latitude, Longitude"]}
           </div>
         </div>
       </section>
-
-      <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Metadata</h2>
-        
+      {/* <section className={styles.section}>        
         <div className={styles.metadataGrid}>
+        <h2 className={styles.metadataGridTitle}>Metadata of choosen org-node</h2>
           <div className={styles.metadataItem}>
             <span>NACE:</span>
             <span>{organizationData.metadata.nace || '-'}</span>
@@ -101,7 +99,8 @@ export const OrganizationInfo = () => {
             <span>{organizationData.metadata.levelType}</span>
           </div>
         </div>
-      </section>
+      </section> */}
+      <img className={styles.mapImage} src={mapImage} alt="google-maps" />
     </div>
   );
 };

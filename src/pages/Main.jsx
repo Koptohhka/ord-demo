@@ -5,19 +5,18 @@ import { OrganizationInfo } from "../components/OrganizationInfo";
 import styles from "./Main.module.css";
 
 export const Main = () => {
+  const [selectedNode, setSelectedNode] = useState(null);
 
   return (
     <div className={styles.Main}>
       <div className={styles.MainFlex}>
         <div className={styles.SideBar}>
           <div className={styles.TreeWrapper}>
-            <TreeTableComponent treeData={TREE_DATA} />
-            <TreeTableComponent treeData={TREE_DATA} />
-            <TreeTableComponent treeData={TREE_DATA} />
+            <TreeTableComponent setSelectedNode={setSelectedNode} treeData={TREE_DATA} />
           </div>
         </div>
         <div className={styles.RightPane}>
-          <OrganizationInfo />
+          <OrganizationInfo selectedNode={selectedNode} />
         </div>
       </div>
     </div>
