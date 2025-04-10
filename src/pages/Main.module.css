@@ -1,6 +1,14 @@
 .Main {
     height: 100vh;
-    max-height: 100vh
+    max-height: 100vh;
+    width: 100%;
+}
+
+.MainFlex {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    max-height: 100vh;
 }
 
 .SideBar {
@@ -8,10 +16,18 @@
     max-height: 100vh;
     height: 100%;
     max-width: 60%;
+    width: 100%;
     border-right: 20px solid #e5eeff;
 }
 
 .TreeWrapper {
     display: flex;
     justify-content: space-between;
+}
+
+.RightPane {
+    overflow: auto;
+    max-height: 100%;
+    width: 30%;
+    flex-grow: 5;
 }

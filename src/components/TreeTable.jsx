@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import { TreeTable } from 'primereact/treetable';
 import { Column } from 'primereact/column';
 import { OverlayPanel } from 'primereact/overlaypanel';
@@ -18,6 +18,10 @@ export const TreeTableComponent = (props) => {
 
   const opRef = useRef(null);
   const [selectedNode, setSelectedNode] = useState(null);
+
+  useLayoutEffect(() => {
+    expandAll();
+  }, []);
 
   const handleMenuClick = (event, node) => {
     setSelectedNode(node);
@@ -113,7 +117,6 @@ export const TreeTableComponent = (props) => {
       setExpandedKeys(allKeys);
     }
   };
-
 
   const cellTemplate = (node) => {
     const level = node.level || 0;
