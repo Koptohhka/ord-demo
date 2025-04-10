@@ -1,0 +1,42 @@
+.expandCaptionWrapper {
+    display: flex;
+    align-items: center;
+    gap: 10%;
+    width: 100%;
+}
+
+.expandCaption {
+    font-size: 14px;
+    color: #3f558d;
+}
+
+.expandCaption:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* .treetable-custom .p-treetable-tbody > tr,
+.treetable-custom .p-treetable-thead > tr {
+  border-top: none !important;
+  border-bottom: none !important;
+} */
+
+.treetableCustom td {
+  border: none;
+}
+
+.customOverlay {
+    padding: 0px;
+    color: #3f558d;
+    transform: translateX(-80%);
+}
+
+.customOverlay:before,
+.customOverlay:after {
+  display: none !important;
+}
+
+.customOverlay > div{
+    padding: 5px 9px;
+    font-size: 12px;
+}

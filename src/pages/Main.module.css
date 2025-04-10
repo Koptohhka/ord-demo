@@ -1,0 +1,17 @@
+.Main {
+    height: 100vh;
+    max-height: 100vh
+}
+
+.SideBar {
+    overflow: auto;
+    max-height: 100vh;
+    height: 100%;
+    max-width: 60%;
+    border-right: 20px solid #e5eeff;
+}
+
+.TreeWrapper {
+    display: flex;
+    justify-content: space-between;
+}
