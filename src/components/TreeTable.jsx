@@ -2,9 +2,7 @@ import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
 import { TreeTable } from 'primereact/treetable';
 import { Column } from 'primereact/column';
 import { OverlayPanel } from 'primereact/overlaypanel';
-import { Dialog } from 'primereact/dialog';
-import { InputText } from 'primereact/inputtext';
-import { Button } from 'primereact/button';
+import { CreateNewOrgNode } from './CreateNewOrgNode';
 
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
@@ -13,70 +11,13 @@ import 'primeflex/primeflex.css';
 
 import styles from './TreeTable.module.css';
 
-// TMP!!!
-// Генераторы случайных данных
-const generateRandomAddress = () => {
-  const streets = ['Main St', 'Park Ave', 'Elm St', 'Oak Rd', 'Pine St'];
-  const cities = ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix'];
-  return `${Math.floor(Math.random() * 1000)} ${streets[Math.floor(Math.random() * streets.length)]}, ${cities[Math.floor(Math.random() * cities.length)]}`;
-};
-
-const generateRandomLatitude = () => (Math.random() * 180 - 90).toFixed(6);
-const generateRandomLongitude = () => (Math.random() * 360 - 180).toFixed(6);
-const generateRandomContactPhone = () => `+1${Math.floor(Math.random() * 1000000000).toString().padStart(10, '0')}`;
-
-// Обработка данных дерева
-const enrichNodeWithRandomData = (node) => {
-  if (!node.data.address) node.data.address = generateRandomAddress();
-  if (!node.data.latitude) node.data.latitude = generateRandomLatitude();
-  if (!node.data.longitude) node.data.longitude = generateRandomLongitude();
-  if (!node.data.contactPhone) node.data.contactPhone = generateRandomContactPhone();
-  if (node.children) node.children.forEach(enrichNodeWithRandomData);
-};
-
-const processTreeData = (treeData) => {
-  const clonedData = JSON.parse(JSON.stringify(treeData));
-  clonedData.forEach(enrichNodeWithRandomData);
-  return clonedData;
-};
-// TMP!!!
-
 export const TreeTableComponent = (props) => {
-  const [nodes, setNodes] = useState(() => {
-    try {
-      const savedData = localStorage.getItem('treeData');
-      if (savedData) return JSON.parse(savedData);
-    } catch (e) {
-      console.error('Ошибка загрузки из localStorage:', e);
-    }
-
-    return props.treeData;
-  });
+  const [nodes] = useState(props.treeData);
   const [searchValue, setSearchValue] = useState('');
   const [expandedKeys, setExpandedKeys] = useState({});
   const [isModalVisible, setModalVisible] = useState(false);
-  const [newNodeName, setNewNodeName] = useState('');
   const [selectedNode, setSelectedNode] = useState(null);
-  const [newNodeData, setNewNodeData] = useState(null);
-
-  const defaultBodyTemplate = (field) => (node) => node.data[field];
-  const gpsBodyTemplate = (field) => (node) => {
-    return (
-      <div style={{
-        width: "100%",
-        display: "flex",
-        alignItems: "center"
-      }}>
-        {node.data[field]}
-        <i
-          className="pi pi-ellipsis-v"
-          style={{ cursor: 'pointer', padding: '0 0.5rem', display: "block" }}
-          onClick={(e) => handleMenuClick(e, node)}
-        />
-      </div>
-    )
-  };
-
+  const [selectedNodeKey, setSelectedNodeKey] = useState(null);
 
   const opRef = useRef(null);
 
@@ -92,48 +33,6 @@ export const TreeTableComponent = (props) => {
     setSelectedNode(node);
     opRef.current.toggle(event);
   };
-
-  const handleAddNewOrgNode = () => {
-    if (!selectedNode || !newNodeName.trim()) return;
-
-    const newNode = {
-      key: `node-${Date.now()}`,
-      data: {
-        name: newNodeName.trim(),
-        address: generateRandomAddress(),
-        "Contest name": generateRandomLatitude(),
-        "Contest phone": generateRandomLongitude(),
-        "Latitude, Longitude": generateRandomContactPhone()
-      },
-      children: []
-    };
-
-    const updateTree = (nodes) => {
-      return nodes.map(node => {
-        if (node.key === selectedNode.key) {
-          return {
-            ...node,
-            children: [...(node.children || []), newNode]
-          };
-        }
-        if (node.children) {
-          return {
-            ...node,
-            children: updateTree(node.children)
-          };
-        }
-        return node;
-      });
-    };
-
-    const newNodes = updateTree(nodes);
-    setNodes(newNodes);
-    setExpandedKeys(prev => ({ ...prev, [selectedNode.key]: true }));
-
-    setModalVisible(false);
-    setNewNodeName('');
-  };
-
 
   const handleSearchChange = (e) => {
     setSearchValue(e.target.value);
@@ -260,6 +159,13 @@ export const TreeTableComponent = (props) => {
       </div>
     );
   };
+  const actionTemplate = (node) => {
+    return (<i
+      className="pi pi-ellipsis-v"
+      style={{ cursor: 'pointer', padding: '0 0.5rem' }}
+      onClick={(e) => handleMenuClick(e, node)}
+    />)
+  }
 
   const customHeader = (
     <div className={styles.expandCaptionWrapper}>
@@ -272,119 +178,27 @@ export const TreeTableComponent = (props) => {
     </div>
   );
 
-  const modalFooter = (
-    <div>
-      <Button
-        label="Cancel"
-        icon="pi pi-times"
-        onClick={() => {
-          setModalVisible(false);
-          setNewNodeName('');
-        }}
-        className="p-button-text"
-      />
-      <Button
-        className="p-button-text"
-        label="Create"
-        icon="pi pi-check"
-        onClick={handleAddNewOrgNode}
-        autoFocus
-        disabled={!newNodeName.trim()}
-      />
-    </div>
-  );
+  const defaultBodyTemplate = (field) => (node) => node.data[field];
+  const addressBodyTemplate = (field) => (node) => `${node.data.address.country}, ${node.data.address.city}, ${node.data.address.street}, ${node.data.address.postalCode}`;
+  const contactBodyTemplate = (field) => (node) => `${node.data.contact.name}, ${node.data.contact.phone}`;
+  const gpsBodyTemplate = (field) => (node) => `${node.data.gps.lat}, ${node.data.gps.lon}`;
 
   return (
     <div className={styles.treePanel}>
-      <Dialog
-        header="Create New Node"
-        visible={isModalVisible}
-        style={{ width: '400px' }}
-        footer={modalFooter}
-        onHide={() => {
-          setModalVisible(false);
-          setNewNodeName('');
-        }}
-        modal
-      >
-        <div className="p-field">
-          <label htmlFor="nodeName" className="p-d-block">
-            Node Name
-          </label>
-          <InputText
-            id="nodeName"
-            value={newNodeName}
-            onChange={(e) => setNewNodeName(e.target.value)}
-            autoFocus
-            className="p-d-block"
-            style={{ width: '100%' }}
-            onKeyPress={(e) => e.key === 'Enter' && handleAddNewOrgNode()}
-          />
-        </div>
-        <div className="p-field">
-          <label htmlFor="adressName" className="p-d-block">
-            Adress
-          </label>
-          <InputText
-            id="adressName"
-            value={newNodeName}
-            onChange={(e) => setNewNodeName(e.target.value)}
-            autoFocus
-            className="p-d-block"
-            style={{ width: '100%' }}
-            onKeyPress={(e) => e.key === 'Enter' && handleAddNewOrgNode()}
-          />
-        </div>
-        <div className="p-field">
-          <label htmlFor="adressName" className="p-d-block">
-            Contest Name
-          </label>
-          <InputText
-            id="ContestName"
-            value={newNodeName}
-            onChange={(e) => setNewNodeName(e.target.value)}
-            autoFocus
-            className="p-d-block"
-            style={{ width: '100%' }}
-            onKeyPress={(e) => e.key === 'Enter' && handleAddNewOrgNode()}
-          />
-        </div>
-        <div className="p-field">
-          <label htmlFor="ContestPhone" className="p-d-block">
-            Contest Phone
-          </label>
-          <InputText
-            id="ContestPhone"
-            value={newNodeName}
-            onChange={(e) => setNewNodeName(e.target.value)}
-            autoFocus
-            className="p-d-block"
-            style={{ width: '100%' }}
-            onKeyPress={(e) => e.key === 'Enter' && handleAddNewOrgNode()}
-          />
-        </div>
-        <div className="p-field">
-          <label htmlFor="GPSName" className="p-d-block">
-            GPS
-          </label>
-          <InputText
-            id="GPSName"
-            value={newNodeName}
-            onChange={(e) => setNewNodeName(e.target.value)}
-            autoFocus
-            className="p-d-block"
-            style={{ width: '100%' }}
-            onKeyPress={(e) => e.key === 'Enter' && handleAddNewOrgNode()}
-          />
-        </div>
-      </Dialog>
+      <CreateNewOrgNode visible={isModalVisible} />
       <TreeTable
-        // selectionMode="single"
         value={filteredData}
         expandedKeys={expandedKeys}
         onToggle={(e) => setExpandedKeys(e.value)}
-        className={styles.treetableCustom}
+        onRowClick={(e) => props.setSelectedNode(e.node)}
         tableStyle={{ minWidth: '100%' }}
+        rowClassName={(e) => {
+          if (props.selectedNode && e.key === props.selectedNode.key) {
+            return styles.rowSelected;
+          }
+
+          return styles.row;
+        }}
       >
         <Column
           field="name"
@@ -394,24 +208,22 @@ export const TreeTableComponent = (props) => {
         />
         <Column
           header="Address"
-          body={defaultBodyTemplate('address')}
+          body={addressBodyTemplate('address')}
           style={{ width: '25%' }}
         />
         <Column
-          header="Contest name"
-          body={defaultBodyTemplate('Contest name')}
-          style={{ width: '15%' }}
+          header="Contact"
+          body={contactBodyTemplate('contact')}
+          style={{ width: '20%' }}
         />
         <Column
-          header="Contest phone"
-          body={defaultBodyTemplate('Contest phone')}
-          style={{ width: '15%' }}
-        />
-        <Column
-          header="Latitude, Longitude"
+          header="Coordinates"
           body={gpsBodyTemplate("Latitude, Longitude")}
           style={{ width: '15%' }}
         />
+        <Column style={{
+          width: "5%"
+        }} body={actionTemplate} />
       </TreeTable>
       <OverlayPanel className={styles.customOverlay} ref={opRef}>
         <div
@@ -423,6 +235,7 @@ export const TreeTableComponent = (props) => {
           + Create new org-node
         </div>
       </OverlayPanel>
+
     </div>
   );
 };

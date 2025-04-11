@@ -12,7 +12,7 @@ export const Main = () => {
       <div className={styles.MainFlex}>
         <div className={styles.SideBar}>
           <div className={styles.TreeWrapper}>
-            <TreeTableComponent setSelectedNode={setSelectedNode} treeData={TREE_DATA} />
+            <TreeTableComponent selectedNode={selectedNode} setSelectedNode={setSelectedNode} treeData={TREE_DATA} />
           </div>
         </div>
         <div className={styles.RightPane}>
