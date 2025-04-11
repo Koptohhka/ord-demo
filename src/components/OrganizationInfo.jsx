@@ -6,6 +6,9 @@ import { Column } from 'primereact/column';
 
 import styles from './OrganizationInfo.module.css';
 import mapImage from "../assets/img/completed-google-places-label.png";
+import heatmapImg from "../assets/img/heatmap.jpg";
+import risksImg from "../assets/img/risks.jpg";
+import controlsImg from "../assets/img/controls.jpg";
 
 const coworkersData = [
   { id: 1, name: 'Alice Johnson', role: 'Developer', email: 'alice.j@example.com' },
@@ -26,30 +29,56 @@ export const OrganizationInfo = ({ selectedNode }) => {
 
     return (
       <div className={styles.container}>
-        <section style={{
-          width: "100%"
-        }} className={styles.section}>
-          <div className={styles.field}>
-            <span className={styles.fieldLabel}>Type:</span>
-            <span>{type}</span>
-          </div>
-          <div className={styles.field}>
-            <span className={styles.fieldLabel}>Author:</span>
-            <span>{author}</span>
-          </div>
-          <div className={styles.field}>
-            <span className={styles.fieldLabel}>Status:</span>
-            <span>{status}</span>
-          </div>
-          <div className={styles.field}>
-            <span className={styles.fieldLabel}>Start:</span>
-            <span>{`${dates.startDate}`}</span>
-          </div>
-          <div className={styles.field}>
-            <span className={styles.fieldLabel}>Finish:</span>
-            <span>{`${dates.endDate}`}</span>
-          </div>
-        </section>
+        <TabView
+          panelContainerStyle={{
+            padding: "0px"
+          }}
+          style={{
+            width: "100%",
+            padding: "0px"
+          }}>
+          <TabPanel headerClassName={styles.sectionTitle} header="General">
+            <section style={{
+              width: "100%"
+            }} className={styles.section}>
+              <div className={styles.field}>
+                <span className={styles.fieldLabel}>Type:</span>
+                <span>{type}</span>
+              </div>
+              <div className={styles.field}>
+                <span className={styles.fieldLabel}>Author:</span>
+                <span>{author}</span>
+              </div>
+              <div className={styles.field}>
+                <span className={styles.fieldLabel}>Status:</span>
+                <span>{status}</span>
+              </div>
+              <div className={styles.field}>
+                <span className={styles.fieldLabel}>Start:</span>
+                <span>{`${dates.startDate}`}</span>
+              </div>
+              <div className={styles.field}>
+                <span className={styles.fieldLabel}>Finish:</span>
+                <span>{`${dates.endDate}`}</span>
+              </div>
+
+              <img className={styles.heatmapImg} src={heatmapImg} alt="" />
+
+            </section>
+          </TabPanel>
+          <TabPanel style={{
+            padding: "0px",
+            margin: "0px"
+          }} headerClassName={styles.sectionTitle} header="Risk details">
+            <img className={styles.heatmapImg} src={risksImg} alt="" />
+          </TabPanel>
+          <TabPanel style={{
+            padding: "0px",
+            margin: "0px"
+          }} headerClassName={styles.sectionTitle} header="Controls">
+              <img className={styles.heatmapImg} src={controlsImg} alt="" />
+          </TabPanel>
+        </TabView>
       </div>
     )
   }

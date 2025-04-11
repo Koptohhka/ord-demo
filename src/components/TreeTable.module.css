@@ -47,3 +47,18 @@
 .rowSelected {
   background-color: rgba(0, 0, 0, 0.08);
 }
+
+.overlayOption {
+  width: 100%;
+  padding: 4px;
+
+  border-radius: 4px;
+
+  color: #213b7b;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.overlayOption:hover {
+  color: #213a7b93;
+}

@@ -76,6 +76,15 @@ export const TREE_DATA = [
                   status: 'Open',
                   type: "Assessment"
                 },
+              },
+              {
+                key: "rnd-center-graz-a3",
+                data: {
+                  author: ' ',
+                  dates: { startDate: ' ', endDate: ' ' },
+                  status: ' ',
+                  type: "Risk-transfer"
+                },
               }
             ]
           }, {

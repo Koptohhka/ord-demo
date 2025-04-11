@@ -34,10 +34,6 @@ export const TreeTableComponent = (props) => {
     opRef.current.toggle(event);
   };
 
-  const handleSearchChange = (e) => {
-    setSearchValue(e.target.value);
-  };
-
   const filterNodesWithLevel = (nodeList, query, level = 0) => {
     if (!query) {
       return nodeList.map((node) => {
@@ -133,7 +129,7 @@ export const TreeTableComponent = (props) => {
     if (hasChildren) {
       paddingLeft = `${level * 1}rem`;
     }
-    
+
     return (
       <div
         style={{
@@ -182,11 +178,14 @@ export const TreeTableComponent = (props) => {
   }
 
   const actionTemplate = (node) => {
-    return (<i
-      className="pi pi-ellipsis-v"
-      style={{ cursor: 'pointer', padding: '0 0.5rem' }}
-      onClick={(e) => handleMenuClick(e, node)}
-    />)
+
+    return (
+      <i
+        className="pi pi-ellipsis-v"
+        style={{ cursor: 'pointer', padding: '0 0.5rem' }}
+        onClick={(e) => handleMenuClick(e, node)}
+      />
+    )
   }
 
   const customHeader = (
@@ -200,28 +199,34 @@ export const TreeTableComponent = (props) => {
     </div>
   );
 
-  const defaultBodyTemplate = (field) => (node) => node.data[field];
-  const addressBodyTemplate = (field) => (node) => {
-    if (!node.data.address || !node.data.address.country) {
-      return "";
+  const getOptionsForOverlay = () => {
+    const closeOptionsHandler = () => opRef.current.toggle(false)
+
+    if (!selectedNode) {
+      return null;
     }
 
-    return `${node.data.address.country}, ${node.data.address.city}, ${node.data.address.street}, ${node.data.address.postalCode}`;
-  };
-  const contactBodyTemplate = (field) => (node) => {
-    if (!node.data.contact || !node.data.contact.name) {
-      return "";
+    if (selectedNode.data.type === "Location") {
+      return (
+        <div onClick={closeOptionsHandler} className={styles.overlayOption}>
+          + Create new org-node
+        </div>
+      )
     }
+    
 
-    return `${node.data.contact.name}, ${node.data.contact.phone}`
-  };
-  const gpsBodyTemplate = (field) => (node) => {
-    if (!node.data.gps) {
-      return "";
-    }
-
-    return `${node.data.gps.lat}, ${node.data.gps.lon}`;
-  };
+    return (
+      <>
+        <div onClick={closeOptionsHandler} className={styles.overlayOption}>
+          print report
+        </div>
+        {selectedNode.data.status == "Open" ? (
+          <div onClick={closeOptionsHandler} className={styles.overlayOption}>open</div>
+        ) : null}
+        <div onClick={closeOptionsHandler} className={styles.overlayOption}>view</div>
+      </>
+    )
+  }
 
   return (
     <div className={styles.treePanel}>
@@ -230,7 +235,13 @@ export const TreeTableComponent = (props) => {
         value={filteredData}
         expandedKeys={expandedKeys}
         onToggle={(e) => setExpandedKeys(e.value)}
-        onRowClick={(e) => props.setSelectedNode(e.node)}
+        onRowClick={(e) => {
+          console.log(e.node)
+          if (e.node.data.type === "Risk-transfer") {
+            return;
+          }
+          props.setSelectedNode(e.node)
+        }}
         tableStyle={{ minWidth: '100%' }}
         rowClassName={(e) => {
           if (props.selectedNode && e.key === props.selectedNode.key) {
@@ -272,7 +283,7 @@ export const TreeTableComponent = (props) => {
           }}
           onClick={() => setModalVisible(true)}
         >
-          + Create new org-node
+          {getOptionsForOverlay()}
         </div>
       </OverlayPanel>
 
