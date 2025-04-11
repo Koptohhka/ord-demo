@@ -1,8 +1,17 @@
 .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    height: 100%;
+    width: 100%;
+
     font-family: Arial, sans-serif;
     max-width: 800px;
     padding: 20px;
     padding-top: 0px;
+    margin-bottom: 40px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -15,9 +24,11 @@
 }
 
 .sectionTitle {
-    color: #2c3e50;
-    font-size: 1.4rem;
-    margin-bottom: 10px;
+    color: #2c3e50 !important;
+}
+
+.sectionTitle * {
+    color: #2c3e50 !important;
 }
 
 .sectionTitleDisabled {
@@ -118,6 +129,6 @@
     display: flex;
     align-items: center;
     width: 100%;
-    border-bottom: 2px solid #3498db;
+    /* border-bottom: 2px solid #3498db; */
     gap: 15px;
 }

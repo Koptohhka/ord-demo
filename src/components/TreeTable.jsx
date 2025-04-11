@@ -133,12 +133,9 @@ export const TreeTableComponent = (props) => {
     if (hasChildren) {
       paddingLeft = `${level * 1}rem`;
     }
-
-    const clickHandler = () => props.setSelectedNode(node);
-
+    
     return (
       <div
-        onClick={clickHandler}
         style={{
           display: 'flex',
           alignItems: 'center',
@@ -154,11 +151,36 @@ export const TreeTableComponent = (props) => {
               {isExpanded ? <i className="pi pi-chevron-down" /> : <i className="pi pi-chevron-right" />}
             </span>
           )}
-          <span>{node.data.name}</span>
+          <span>{node.data.name || node.data.type}</span>
         </div>
       </div>
     );
   };
+
+  const secondCellTemplate = (node) => {
+    if (!node.data.address && node.data.author) {
+      return node.data.author;
+    }
+
+    return `${node.data.address.country}, ${node.data.address.city}, ${node.data.address.street}, ${node.data.address.postalCode}`;
+  }
+
+  const thirdCellTemplate = (node) => {
+    if (!node.data.gps && node.data.status) {
+      return node.data.status;
+    }
+
+    return `${node.data.contact.name}, ${node.data.contact.phone}`
+  }
+
+  const fourthCellTemplate = (node) => {
+    if (!node.data.contact && node.data.dates) {
+      return `${node.data.dates.startDate}/${node.data.dates.endDate}`;
+    }
+
+    return `${node.data.gps.lat}, ${node.data.gps.lon}`;
+  }
+
   const actionTemplate = (node) => {
     return (<i
       className="pi pi-ellipsis-v"
@@ -179,9 +201,27 @@ export const TreeTableComponent = (props) => {
   );
 
   const defaultBodyTemplate = (field) => (node) => node.data[field];
-  const addressBodyTemplate = (field) => (node) => `${node.data.address.country}, ${node.data.address.city}, ${node.data.address.street}, ${node.data.address.postalCode}`;
-  const contactBodyTemplate = (field) => (node) => `${node.data.contact.name}, ${node.data.contact.phone}`;
-  const gpsBodyTemplate = (field) => (node) => `${node.data.gps.lat}, ${node.data.gps.lon}`;
+  const addressBodyTemplate = (field) => (node) => {
+    if (!node.data.address || !node.data.address.country) {
+      return "";
+    }
+
+    return `${node.data.address.country}, ${node.data.address.city}, ${node.data.address.street}, ${node.data.address.postalCode}`;
+  };
+  const contactBodyTemplate = (field) => (node) => {
+    if (!node.data.contact || !node.data.contact.name) {
+      return "";
+    }
+
+    return `${node.data.contact.name}, ${node.data.contact.phone}`
+  };
+  const gpsBodyTemplate = (field) => (node) => {
+    if (!node.data.gps) {
+      return "";
+    }
+
+    return `${node.data.gps.lat}, ${node.data.gps.lon}`;
+  };
 
   return (
     <div className={styles.treePanel}>
@@ -208,17 +248,17 @@ export const TreeTableComponent = (props) => {
         />
         <Column
           header="Address"
-          body={addressBodyTemplate('address')}
+          body={secondCellTemplate}
           style={{ width: '25%' }}
         />
         <Column
           header="Contact"
-          body={contactBodyTemplate('contact')}
+          body={thirdCellTemplate}
           style={{ width: '20%' }}
         />
         <Column
           header="Coordinates"
-          body={gpsBodyTemplate("Latitude, Longitude")}
+          body={fourthCellTemplate}
           style={{ width: '15%' }}
         />
         <Column style={{
