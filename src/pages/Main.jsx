@@ -11,9 +11,7 @@ export const Main = () => {
     <div className={styles.Main}>
       <div className={styles.MainFlex}>
         <div className={styles.SideBar}>
-          <div className={styles.TreeWrapper}>
-            <TreeTableComponent selectedNode={selectedNode} setSelectedNode={setSelectedNode} treeData={TREE_DATA} />
-          </div>
+          <TreeTableComponent selectedNode={selectedNode} setSelectedNode={setSelectedNode} treeData={TREE_DATA} />
         </div>
         <div className={styles.RightPane}>
           <OrganizationInfo selectedNode={selectedNode} />

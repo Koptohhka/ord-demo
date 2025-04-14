@@ -1,3 +1,7 @@
+// Organization Location Entity Division BuisnessUnit
+// Location=Location
+
+
 export const TREE_DATA = [
   {
     key: "global-corporation-inc",
@@ -26,7 +30,7 @@ export const TREE_DATA = [
               address: { city: '208 Main St', country: 'US', street: 'Los Angeles', postalCode: '' },
               contact: { name: 'NextGen Research Awards', phone: '+43-316-555-1122' },
               gps: { lat: 47.070714, lon: 15.439504 },
-              coWorkers:  [
+              coWorkers: [
                 {
                   "coWorkerId": "015806be-e9ec-48bf-88d0-a123100bab1c",
                   "firstName": "Elena",
@@ -162,4 +166,4 @@ export const TREE_DATA = [
       gps: { lat: 40.758896, lon: -73.985130 },
       type: "Entity"
     }
-  }];
+}];

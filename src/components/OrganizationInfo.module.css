@@ -6,6 +6,7 @@
 
     height: 100%;
     width: 100%;
+    min-width: 100%;
 
     font-family: Arial, sans-serif;
     max-width: 800px;
@@ -16,6 +17,24 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.columnWrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.column {
+    padding: 5px;
+    flex: 1;
+}
+
+.Input {
+    border-radius: 8px;
+}
+
+
+
+/* !!! */
 .section {
     background-color: white;
     padding: 20px;
@@ -43,6 +62,8 @@
 }
 
 .fieldLabel {
+    display: flex;
+    align-items: center;
     font-weight: bold;
     min-width: 150px;
     color: #34495e;
@@ -50,6 +71,8 @@
 
 
 .fieldLabelSecondary {
+    display: flex;
+    align-items: center;
     color: #34495e;
     opacity: 0.7;
 }

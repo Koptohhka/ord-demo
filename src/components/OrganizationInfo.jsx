@@ -76,7 +76,7 @@ export const OrganizationInfo = ({ selectedNode }) => {
             padding: "0px",
             margin: "0px"
           }} headerClassName={styles.sectionTitle} header="Controls">
-              <img className={styles.heatmapImg} src={controlsImg} alt="" />
+            <img className={styles.heatmapImg} src={controlsImg} alt="" />
           </TabPanel>
         </TabView>
       </div>
@@ -115,97 +115,230 @@ export const OrganizationInfo = ({ selectedNode }) => {
     setOrgGPSLon(data.gps.lon);
   }, [selectedNode]);
 
-  return (
-    <div className={styles.container}>
-      <TabView panelContainerStyle={{
-        padding: "0px"
-      }} style={{
-        width: "100%",
-        padding: "0px"
-      }}>
-        <TabPanel headerClassName={styles.sectionTitle} header="General">
-          <section className={styles.section}>
-            <div className={styles.field}>
-              <span className={styles.fieldLabel}>Name:</span>
-              <div className="card flex justify-content-center">
-                <InputText value={orgName} onChange={(e) => setOrgName(e.target.value)} />
-              </div>
+  const OrgTypeDetailsComponent = (
+    <div className={styles.columnWrapper}>
+      <div className={styles.column}>
+        <div className={styles.field}>
+          <span className={styles.fieldLabel}>Name:</span>
+          <div className="card flex justify-content-center">
+            <InputText className={styles.Input} value={orgName} onChange={(e) => setOrgName(e.target.value)} />
+          </div>
+        </div>
+        <div className={styles.field}>
+          <span className={styles.fieldLabel}>Logo:</span>
+        </div>
+        <div className={styles.field}>
+          <span className={styles.fieldLabel}>Contact name:</span>
+          <div className="card flex justify-content-center">
+            <InputText className={styles.Input} value={orgName} onChange={(e) => setOrgName(e.target.value)} />
+          </div>
+        </div>
+        <div className={styles.field}>
+          <span className={styles.fieldLabel}>Contact phone:</span>
+          <div className="card flex justify-content-center">
+            <InputText className={styles.Input} value={orgName} onChange={(e) => setOrgName(e.target.value)} />
+          </div>
+        </div>
+        <div className={styles.field}>
+          <span className={styles.fieldLabel}>Contact email:</span>
+          <div className="card flex justify-content-center">
+            <InputText className={styles.Input} value={orgName} onChange={(e) => setOrgName(e.target.value)} />
+          </div>
+        </div>
+      </div>
+      <div className={styles.column}>
+        <span className={styles.fieldLabel}>Adress:</span>
+        <div style={{ paddingLeft: "20px", paddingTop: "20px" }}>
+          <div className={styles.field}>
+            <span className={styles.fieldLabelSecondary}>Country:</span>
+            <div className="card flex justify-content-center">
+              <InputText className={styles.Input} value={orgGPSLat} onChange={(e) => setOrgGPSLat(e.target.value)} />
             </div>
-
-            <span className={styles.fieldLabel}>Address:</span>
-            <div style={{ paddingLeft: "20px", paddingTop: "20px" }}>
-              <div className={styles.field}>
-                <span className={styles.fieldLabelSecondary}>Street:</span>
-                <div className="card flex justify-content-center">
-                  <InputText value={orgAddressStreet} onChange={(e) => setOrgAddressStreet(e.target.value)} />
-                </div>
-              </div>
-              <div className={styles.field}>
-                <span className={styles.fieldLabelSecondary}>Postal code:</span>
-                <div className="card flex justify-content-center">
-                  <InputText value={orgAddressPostalCode} onChange={(e) => setOrgAddressPostalCode(e.target.value)} />
-                </div>
-              </div>
-              <div className={styles.field}>
-                <span className={styles.fieldLabelSecondary}>City:</span>
-                <div className="card flex justify-content-center">
-                  <InputText value={orgAddressCity} onChange={(e) => setOrgAddressCity(e.target.value)} />
-                </div>
-              </div>
-              <div className={styles.field}>
-                <span className={styles.fieldLabelSecondary}>Country:</span>
-                <div className="card flex justify-content-center">
-                  <InputText value={orgAddressCountry} onChange={(e) => setOrgAddressCountry(e.target.value)} />
-                </div>
-              </div>
+          </div>
+          <div className={styles.field}>
+            <span className={styles.fieldLabelSecondary}>Postal code:</span>
+            <div className="card flex justify-content-center">
+              <InputText className={styles.Input} value={orgGPSLon} onChange={(e) => setOrgGPSLon(e.target.value)} />
             </div>
-
-            <div className={styles.field}>
-              <span className={styles.fieldLabel}>Contact name:</span>
-              <div className="card flex justify-content-center">
-                <InputText value={orgContactName} onChange={(e) => setOrgContactName(e.target.value)} />
-              </div>
+          </div>
+          <div className={styles.field}>
+            <span className={styles.fieldLabelSecondary}>City:</span>
+            <div className="card flex justify-content-center">
+              <InputText className={styles.Input} value={orgGPSLon} onChange={(e) => setOrgGPSLon(e.target.value)} />
             </div>
-
-            <div className={styles.field}>
-              <span className={styles.fieldLabel}>Contact phone:</span>
-              <div className="card flex justify-content-center">
-                <InputText value={orgContactPhone} onChange={(e) => setOrgContactPhone(e.target.value)} />
-              </div>
+          </div>
+          <div className={styles.field}>
+            <span className={styles.fieldLabelSecondary}>Street:</span>
+            <div className="card flex justify-content-center">
+              <InputText className={styles.Input} value={orgGPSLon} onChange={(e) => setOrgGPSLon(e.target.value)} />
             </div>
-
-            <span className={styles.fieldLabel}>Coordinates:</span>
-            <div style={{ paddingLeft: "20px", paddingTop: "20px" }}>
-              <div className={styles.field}>
-                <span className={styles.fieldLabelSecondary}>Latitude:</span>
-                <div className="card flex justify-content-center">
-                  <InputText value={orgGPSLat} onChange={(e) => setOrgGPSLat(e.target.value)} />
-                </div>
-              </div>
-              <div className={styles.field}>
-                <span className={styles.fieldLabelSecondary}>Longitude:</span>
-                <div className="card flex justify-content-center">
-                  <InputText value={orgGPSLon} onChange={(e) => setOrgGPSLon(e.target.value)} />
-                </div>
-              </div>
+          </div>
+        </div>
+        <span className={styles.fieldLabel}>Main GPS:</span>
+        <div style={{ paddingLeft: "20px", paddingTop: "20px" }}>
+          <div className={styles.field}>
+            <span className={styles.fieldLabelSecondary}>Latitude:</span>
+            <div className="card flex justify-content-center">
+              <InputText className={styles.Input} value={orgGPSLat} onChange={(e) => setOrgGPSLat(e.target.value)} />
             </div>
-          </section>
-          <img className={styles.mapImage} src={mapImage} alt="google-maps" />
-
-        </TabPanel>
-        <TabPanel style={{
-          padding: "0px",
-          margin: "0px"
-        }} headerClassName={styles.sectionTitle} header="Coworkers">
-          <DataTable value={data.coWorkers ? data.coWorkers : []} responsiveLayout="scroll">
-            <Column field="name" header="Name" body={(item) => {
-              return `${item.firstName} ${item.lastName}`
-            }} />
-            <Column field="role" header="Role" />
-            <Column field="email" header="Email" />
-          </DataTable>
-        </TabPanel>
-      </TabView>
+          </div>
+          <div className={styles.field}>
+            <span className={styles.fieldLabelSecondary}>Longitude:</span>
+            <div className="card flex justify-content-center">
+              <InputText className={styles.Input} value={orgGPSLon} onChange={(e) => setOrgGPSLon(e.target.value)} />
+            </div>
+          </div>
+        </div>
+        <span className={styles.fieldLabel}>NATCAT GPS:</span>
+        <div style={{ paddingLeft: "20px", paddingTop: "20px" }}>
+          <div className={styles.field}>
+            <span className={styles.fieldLabelSecondary}>Latitude:</span>
+            <div className="card flex justify-content-center">
+              <InputText className={styles.Input} value={orgGPSLat} onChange={(e) => setOrgGPSLat(e.target.value)} />
+            </div>
+          </div>
+          <div className={styles.field}>
+            <span className={styles.fieldLabelSecondary}>Longitude:</span>
+            <div className="card flex justify-content-center">
+              <InputText className={styles.Input} value={orgGPSLon} onChange={(e) => setOrgGPSLon(e.target.value)} />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className={styles.column}>
+        <div className={styles.field}>
+          <span className={styles.fieldLabel}>Team memberships:</span>
+        </div>
+      </div>
     </div>
+  );
+
+  const LocationTypeDetailsComponent = (
+    <div className={styles.columnWrapper}>
+      <div className={styles.column}>
+        <div className={styles.field}>
+          <span className={styles.fieldLabel}>Location:</span>
+          <div className="card flex justify-content-center">
+            <InputText className={styles.Input} value={orgName} onChange={(e) => setOrgName(e.target.value)} />
+          </div>
+        </div>
+        <div className={styles.field}>
+          <span className={styles.fieldLabel}>Logo:</span>
+        </div>
+        <div className={styles.field}>
+          <span className={styles.fieldLabel}>Photo:</span>
+        </div>
+        <div className={styles.field}>
+          <span className={styles.fieldLabel}>Location NACE code:</span>
+          <div className="card flex justify-content-center">
+            <InputText className={styles.Input} value={orgName} onChange={(e) => setOrgName(e.target.value)} />
+          </div>
+        </div>
+        <div className={styles.field}>
+          <span className={styles.fieldLabel}>Contact name:</span>
+          <div className="card flex justify-content-center">
+            <InputText className={styles.Input} value={orgName} onChange={(e) => setOrgName(e.target.value)} />
+          </div>
+        </div>
+        <div className={styles.field}>
+          <span className={styles.fieldLabel}>Contact person phone:</span>
+          <div className="card flex justify-content-center">
+            <InputText className={styles.Input} value={orgName} onChange={(e) => setOrgName(e.target.value)} />
+          </div>
+        </div>
+        <div className={styles.field}>
+          <span className={styles.fieldLabel}>Contact email:</span>
+          <div className="card flex justify-content-center">
+            <InputText className={styles.Input} value={orgName} onChange={(e) => setOrgName(e.target.value)} />
+          </div>
+        </div>
+      </div>
+      <div className={styles.column}>
+        <span className={styles.fieldLabel}>Adress:</span>
+        <div style={{ paddingLeft: "20px", paddingTop: "20px" }}>
+          <div className={styles.field}>
+            <span className={styles.fieldLabelSecondary}>Country:</span>
+            <div className="card flex justify-content-center">
+              <InputText className={styles.Input} value={orgGPSLat} onChange={(e) => setOrgGPSLat(e.target.value)} />
+            </div>
+          </div>
+          <div className={styles.field}>
+            <span className={styles.fieldLabelSecondary}>Postal code:</span>
+            <div className="card flex justify-content-center">
+              <InputText className={styles.Input} value={orgGPSLon} onChange={(e) => setOrgGPSLon(e.target.value)} />
+            </div>
+          </div>
+          <div className={styles.field}>
+            <span className={styles.fieldLabelSecondary}>City:</span>
+            <div className="card flex justify-content-center">
+              <InputText className={styles.Input} value={orgGPSLon} onChange={(e) => setOrgGPSLon(e.target.value)} />
+            </div>
+          </div>
+          <div className={styles.field}>
+            <span className={styles.fieldLabelSecondary}>Street:</span>
+            <div className="card flex justify-content-center">
+              <InputText className={styles.Input} value={orgGPSLon} onChange={(e) => setOrgGPSLon(e.target.value)} />
+            </div>
+          </div>
+        </div>
+        <span className={styles.fieldLabel}>Main GPS:</span>
+        <div style={{ paddingLeft: "20px", paddingTop: "20px" }}>
+          <div className={styles.field}>
+            <span className={styles.fieldLabelSecondary}>Latitude:</span>
+            <div className="card flex justify-content-center">
+              <InputText className={styles.Input} value={orgGPSLat} onChange={(e) => setOrgGPSLat(e.target.value)} />
+            </div>
+          </div>
+          <div className={styles.field}>
+            <span className={styles.fieldLabelSecondary}>Longitude:</span>
+            <div className="card flex justify-content-center">
+              <InputText className={styles.Input} value={orgGPSLon} onChange={(e) => setOrgGPSLon(e.target.value)} />
+            </div>
+          </div>
+        </div>
+        <span className={styles.fieldLabel}>NATCAT GPS:</span>
+        <div style={{ paddingLeft: "20px", paddingTop: "20px" }}>
+          <div className={styles.field}>
+            <span className={styles.fieldLabelSecondary}>Latitude:</span>
+            <div className="card flex justify-content-center">
+              <InputText className={styles.Input} value={orgGPSLat} onChange={(e) => setOrgGPSLat(e.target.value)} />
+            </div>
+          </div>
+          <div className={styles.field}>
+            <span className={styles.fieldLabelSecondary}>Longitude:</span>
+            <div className="card flex justify-content-center">
+              <InputText className={styles.Input} value={orgGPSLon} onChange={(e) => setOrgGPSLon(e.target.value)} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <TabView panelContainerStyle={{
+      padding: "0px",
+      paddingLeft: "15px",
+      paddingRight: "15px"
+    }} style={{
+      width: "100%",
+      padding: "0px"
+    }}>
+      <TabPanel headerClassName={styles.sectionTitle} header="General">
+        {OrgTypeDetailsComponent}
+      </TabPanel>
+      <TabPanel style={{
+        padding: "0px",
+        margin: "0px"
+      }} headerClassName={styles.sectionTitle} header="Coworkers">
+        <DataTable value={data.coWorkers ? data.coWorkers : []} responsiveLayout="scroll">
+          <Column field="name" header="Name" body={(item) => {
+            return `${item.firstName} ${item.lastName}`
+          }} />
+          <Column field="role" header="Role" />
+          <Column field="email" header="Email" />
+        </DataTable>
+      </TabPanel>
+    </TabView>
   );
 };
