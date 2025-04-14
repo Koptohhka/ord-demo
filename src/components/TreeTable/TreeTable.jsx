@@ -6,6 +6,8 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
 
+import { ICONS } from "./icons";
+
 export const TreeTableComponent = (props) => {
   const [nodes, setNodes] = useState(props.treeData);
 
@@ -26,9 +28,25 @@ export const TreeTableComponent = (props) => {
   };
 
   const nodeTemplate = (node, options) => {
+    console.log(node.data.type, "EE")
     return (
       <div onClick={() => props.setSelectedNode(node)} className={styles.RowFlex}>
-        <span className={styles.Row}>{node.data.name}</span>
+        <div style={{
+          width: "25px",
+          height: "25px",
+          minWidth: "25px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center"
+        }}>
+          {ICONS[node.data.type]}
+        </div>
+        <span className={styles.Row}>
+          {node.data.name}
+          {node.data.tags ? <span style={{ color: "#213b7b", fontWeight: "bold", }}>
+            {` (${node.data.tags.map(tag => tag.toUpperCase()).join(",")})`}
+          </span> : null}
+        </span>
         <i
           className={`pi pi-ellipsis-v ${styles.ActionIcon}`}
           style={{ cursor: 'pointer', padding: '0 0.5rem' }}

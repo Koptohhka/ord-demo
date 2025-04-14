@@ -1,4 +1,4 @@
-// Organization Location Entity Division BuisnessUnit
+// Organization Location Entity Division
 // Location=Location
 
 
@@ -10,7 +10,8 @@ export const TREE_DATA = [
       address: { city: 'Chicago', country: 'US', street: '227 Pine St', postalCode: '1010' },
       contact: { name: 'Annual Innovation Contest', phone: '+1-312-555-0101' },
       gps: { lat: 41.881832, lon: -87.623177 },
-      type: "Entity"
+      type: "Organization",
+      tags: ['Bu', 'Ma', 'Fi', 'Re', 'Co']
     },
     children: [
       {
@@ -60,6 +61,7 @@ export const TREE_DATA = [
                   "email": "Maik.Spitzmueller@riskonmind.eu"
                 }
               ],
+              tags: ['Bu', 'Co', 'Re'],
               type: "Location"
             },
             children: [
@@ -155,7 +157,7 @@ export const TREE_DATA = [
       address: { city: '214 Oak Rd', country: 'US', street: ' New York', postalCode: '' },
       contact: { name: 'Future Tech Hackathon', phone: '+1-212-555-2020' },
       gps: { lat: 40.712776, lon: -74.005974 },
-      type: "Entity"
+      type: "Division"
     }
   }, {
     key: "green-energy-corp",
@@ -164,6 +166,7 @@ export const TREE_DATA = [
       address: { city: '346 Park Ave', country: 'US', street: ' New York', postalCode: '' },
       contact: { name: 'Green Innovation Award', phone: '+1-212-555-3030' },
       gps: { lat: 40.758896, lon: -73.985130 },
+      tags: ['Re', 'Co'],
       type: "Entity"
     }
 }];

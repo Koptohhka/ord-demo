@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { TreeTableComponent } from "../components/TreeTable";
+import { TreeTableComponent, OrganizationInfo } from "../components";
 import { TREE_DATA } from '../constants/tableData';
-import { OrganizationInfo } from "../components/OrganizationInfo";
 import styles from "./Main.module.css";
 
 export const Main = () => {
