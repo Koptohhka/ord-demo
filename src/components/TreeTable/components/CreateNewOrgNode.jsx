@@ -24,7 +24,7 @@ export const CreateNewOrgNode = ({isModalVisible, selectedNode, setNodes, nodes,
   const [lat, setLat] = useState('');
   const [long, setLong] = useState('');
 
-  let disabled = newNodeName && selectedOption && city && country && street && postalCode && contact && contactPhone && lat && long;
+  let disabled = newNodeName && selectedOption;
 
   const handleAddNewOrgNode = () => {
     if (!disabled) return;
