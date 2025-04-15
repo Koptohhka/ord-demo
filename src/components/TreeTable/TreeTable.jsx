@@ -14,7 +14,7 @@ import { ICONS } from "./icons";
 export const TreeTableComponent = (props) => {
   const [nodes, setNodes] = useState(props.treeData);
   const [modalVisible, setModalVisible] = useState(false);
-  
+
   const opRef = useRef(null);
 
   const togglerIcon = (node, options) => {
@@ -35,13 +35,13 @@ export const TreeTableComponent = (props) => {
 
   const nodeTemplate = (node, options) => {
     console.log("Уровень вложенности:", node);
-  
+
     let label = node.data.name;
-  
+
     if (node.data.type === "Assessment" || node.data.type === "Risk-transfer") {
       label = node.data.type;
     }
-  
+
     return (
       <div onClick={() => {
         if (node.data.type === "Risk-transfer") return;
@@ -86,7 +86,7 @@ export const TreeTableComponent = (props) => {
       </div>
     );
   };
-  
+
   const onDragDrop = (event) => {
     setNodes(event.value);
   };
@@ -109,13 +109,31 @@ export const TreeTableComponent = (props) => {
 
     return (
       <>
-        <div onClick={closeOptionsHandler} className={styles.overlayOption}>
-          print report
-        </div>
         {props.selectedNode.data.status == "Open" ? (
-          <div onClick={closeOptionsHandler} className={styles.overlayOption}>open</div>
+          <div onClick={closeOptionsHandler} className={styles.overlayOption}>
+            Edit
+          </div>
         ) : null}
-        <div onClick={closeOptionsHandler} className={styles.overlayOption}>view</div>
+        <div onClick={closeOptionsHandler} className={styles.overlayOption}>
+          View
+        </div>
+        <div onClick={closeOptionsHandler} className={styles.overlayOption}>
+          History
+        </div>
+        {props.selectedNode.data.status == "Open" && (
+          <div onClick={closeOptionsHandler} className={styles.overlayOption}>
+            Delete
+          </div>
+        )}
+        <div onClick={closeOptionsHandler} className={styles.overlayOption}>
+          Copy assesment
+        </div>
+        <div onClick={closeOptionsHandler} className={styles.overlayOption}>
+          RVM Report
+        </div>
+        <div onClick={closeOptionsHandler} className={styles.overlayOption}>
+          Assessment Report
+        </div>
       </>
     )
   }
@@ -136,7 +154,7 @@ export const TreeTableComponent = (props) => {
           {getOptionsForOverlay()}
         </div>
       </OverlayPanel>
-      <CreateNewOrgNode nodes={nodes} selectedNode={props.selectedNode} setNodes={setNodes} setModalVisible={setModalVisible}  isModalVisible={modalVisible} />
+      <CreateNewOrgNode nodes={nodes} selectedNode={props.selectedNode} setNodes={setNodes} setModalVisible={setModalVisible} isModalVisible={modalVisible} />
       <Tree
         style={{
           border: "0px",

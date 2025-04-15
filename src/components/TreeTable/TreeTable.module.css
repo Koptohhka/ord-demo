@@ -19,21 +19,6 @@
   border: none;
 }
 
-.customOverlay {
-  padding: 0px;
-  color: #3f558d;
-  transform: translateX(-80%);
-}
-
-.customOverlay:before,
-.customOverlay:after {
-  display: none !important;
-}
-
-.customOverlay>div {
-  padding: 5px 9px;
-  font-size: 12px;
-}
 
 .row {
   transition: background-color 0.2s ease;
@@ -102,4 +87,34 @@
 
 .ActionIcon {
   /* margin-left: auto; */
+}
+
+
+.customOverlay {
+  padding: 0px;
+  color: #213b7b;
+  transform: translateX(-80%);
+}
+
+.customOverlay * {
+  font-size: 16px;
+}
+
+.customOverlay:before,
+.customOverlay:after {
+  display: none !important;
+}
+
+.customOverlay>div {
+  padding: 5px 9px;
+  font-size: 12px;
+}
+
+.overlayOption {
+  transition: all 0.3s ease;
+  padding: 5px 0px;
+}
+
+.overlayOption:hover {
+  opacity:0.7;
 }
