@@ -18,7 +18,7 @@ export const TreeTableComponent = (props) => {
   const opRef = useRef(null);
 
   const togglerIcon = (node, options) => {
-    if (!node.children) {
+    if (!node.children || (node.children && node.children.length === 0)) {
       return null;
     }
 
