@@ -10,8 +10,19 @@ export const TREE_DATA = [
       address: { city: 'Chicago', country: 'US', street: '227 Pine St', postalCode: '1010' },
       contact: { name: 'Annual Innovation Contest', phone: '+1-312-555-0101' },
       gps: { lat: 41.881832, lon: -87.623177 },
-      type: "Organization",
-      tags: ['Bu', 'Ma', 'Fi', 'Re', 'Co']
+      type: "Entity",
+      tags: [
+        {
+          label: 'Fu',
+          color: "#c32b37"
+        }, {
+          label: 'Ru',
+          color: "#cb6e83"
+        }, {
+          label: 'Cu',
+          color: "#ac7027"
+        }
+      ]
     },
     children: [
       {
@@ -21,7 +32,7 @@ export const TREE_DATA = [
           address: { city: 'Wien', country: 'Austria', street: '798 Elm St', postalCode: '1010' },
           contact: { name: 'European Tech Challenge', phone: '+43-1-555-2345' },
           gps: { lat: 48.208174, lon: 16.373819 },
-          type: "Location"
+          type: "Organization"
         },
         children: [
           {
@@ -61,7 +72,15 @@ export const TREE_DATA = [
                   "email": "Maik.Spitzmueller@riskonmind.eu"
                 }
               ],
-              tags: ['Bu', 'Co', 'Re'],
+              tags: [
+                {
+                  label: "Bu",
+                  color: "#1f4381"
+                }, {
+                  label: 'Mu',
+                  color: "#119073"
+                },
+              ],
               type: "Location"
             },
             children: [
@@ -83,15 +102,15 @@ export const TREE_DATA = [
                   type: "Assessment"
                 },
               },
-              {
-                key: "rnd-center-graz-a3",
-                data: {
-                  author: ' ',
-                  dates: { startDate: ' ', endDate: ' ' },
-                  status: ' ',
-                  type: "Risk-transfer"
-                },
-              }
+              // {
+              //   key: "rnd-center-graz-a3",
+              //   data: {
+              //     author: ' ',
+              //     dates: { startDate: ' ', endDate: ' ' },
+              //     status: ' ',
+              //     type: "Risk-transfer"
+              //   },
+              // }
             ]
           }, {
             key: "manufacturing-plants",
@@ -166,7 +185,18 @@ export const TREE_DATA = [
       address: { city: '346 Park Ave', country: 'US', street: ' New York', postalCode: '' },
       contact: { name: 'Green Innovation Award', phone: '+1-212-555-3030' },
       gps: { lat: 40.758896, lon: -73.985130 },
-      tags: ['Re', 'Co'],
+      tags: [
+       {
+          label: 'Mu',
+          color: "#119073"
+        }, {
+          label: 'Ru',
+          color: "#cb6e83"
+        }, {
+          label: 'Cu',
+          color: "#ac7027"
+        }
+      ],
       type: "Entity"
     }
-}];
+  }];

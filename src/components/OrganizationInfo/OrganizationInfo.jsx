@@ -61,9 +61,7 @@ export const OrganizationInfo = ({ selectedNode }) => {
                 <span className={styles.fieldLabel}>Finish:</span>
                 <span>{`${dates.endDate}`}</span>
               </div>
-
               <img className={styles.heatmapImg} src={heatmapImg} alt="" />
-
             </section>
           </TabPanel>
           <TabPanel style={{
@@ -93,6 +91,7 @@ export const OrganizationInfo = ({ selectedNode }) => {
   const [orgContactEmail, setOrgContactEmail] = useState(``);
   const [orgGPSLat, setOrgGPSLat] = useState(data.gps.lat);
   const [orgGPSLon, setOrgGPSLon] = useState(data.gps.lon);
+  const [locationNACEcode, setLocationNACEcode] = useState("09327548.43");
 
   useEffect(() => {
     if (!selectedNode) {
@@ -232,25 +231,25 @@ export const OrganizationInfo = ({ selectedNode }) => {
         <div className={styles.field}>
           <span className={styles.fieldLabel}>Location NACE code:</span>
           <div className="card flex justify-content-center">
-            <InputText className={styles.Input} value={orgName} onChange={(e) => setOrgName(e.target.value)} />
+            <InputText className={styles.Input} value={locationNACEcode} onChange={(e) => setLocationNACEcode(e.target.value)} />
           </div>
         </div>
         <div className={styles.field}>
           <span className={styles.fieldLabel}>Contact name:</span>
           <div className="card flex justify-content-center">
-            <InputText className={styles.Input} value={orgName} onChange={(e) => setOrgName(e.target.value)} />
+            <InputText className={styles.Input} value={orgContactName} onChange={(e) => setOrgContactName(e.target.value)} />
           </div>
         </div>
         <div className={styles.field}>
           <span className={styles.fieldLabel}>Contact person phone:</span>
           <div className="card flex justify-content-center">
-            <InputText className={styles.Input} value={orgName} onChange={(e) => setOrgName(e.target.value)} />
+            <InputText className={styles.Input} value={orgContactPhone} onChange={(e) => setOrgContactPhone(e.target.value)} />
           </div>
         </div>
         <div className={styles.field}>
           <span className={styles.fieldLabel}>Contact email:</span>
           <div className="card flex justify-content-center">
-            <InputText className={styles.Input} value={orgName} onChange={(e) => setOrgName(e.target.value)} />
+            <InputText className={styles.Input} value={orgContactEmail} onChange={(e) => setOrgContactEmail(e.target.value)} />
           </div>
         </div>
       </div>
@@ -260,25 +259,25 @@ export const OrganizationInfo = ({ selectedNode }) => {
           <div className={styles.field}>
             <span className={styles.fieldLabelSecondary}>Country:</span>
             <div className="card flex justify-content-center">
-              <InputText className={styles.Input} value={orgGPSLat} onChange={(e) => setOrgGPSLat(e.target.value)} />
+              <InputText className={styles.Input} value={orgAddressCountry} onChange={(e) => setOrgAddressCountry(e.target.value)} />
             </div>
           </div>
           <div className={styles.field}>
             <span className={styles.fieldLabelSecondary}>Postal code:</span>
             <div className="card flex justify-content-center">
-              <InputText className={styles.Input} value={orgGPSLon} onChange={(e) => setOrgGPSLon(e.target.value)} />
+              <InputText className={styles.Input} value={orgAddressPostalCode} onChange={(e) => setOrgAddressPostalCode(e.target.value)} />
             </div>
           </div>
           <div className={styles.field}>
             <span className={styles.fieldLabelSecondary}>City:</span>
             <div className="card flex justify-content-center">
-              <InputText className={styles.Input} value={orgGPSLon} onChange={(e) => setOrgGPSLon(e.target.value)} />
+              <InputText className={styles.Input} value={orgAddressCity} onChange={(e) => setOrgAddressCity(e.target.value)} />
             </div>
           </div>
           <div className={styles.field}>
             <span className={styles.fieldLabelSecondary}>Street:</span>
             <div className="card flex justify-content-center">
-              <InputText className={styles.Input} value={orgGPSLon} onChange={(e) => setOrgGPSLon(e.target.value)} />
+              <InputText className={styles.Input} value={orgAddressStreet} onChange={(e) => setOrgAddressStreet(e.target.value)} />
             </div>
           </div>
         </div>

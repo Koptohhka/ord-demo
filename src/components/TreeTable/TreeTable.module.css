@@ -72,12 +72,14 @@
 .RowFlex {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   width: 100%;
 }
 
 .Row {
   padding: 10px 15px;
+  padding-left: 5px;
+
+  width: 100%;
 }
 
 .Toggler {
@@ -99,5 +101,5 @@
 }
 
 .ActionIcon {
-  margin-left: auto;
+  /* margin-left: auto; */
 }

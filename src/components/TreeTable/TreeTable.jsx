@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Tree } from 'primereact/tree';
+import { OverlayPanel } from 'primereact/overlaypanel';
 import styles from './TreeTable.module.css';
+import { CreateNewOrgNode } from "./components/CreateNewOrgNode";
+
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
@@ -10,6 +13,9 @@ import { ICONS } from "./icons";
 
 export const TreeTableComponent = (props) => {
   const [nodes, setNodes] = useState(props.treeData);
+  const [modalVisible, setModalVisible] = useState(false);
+  
+  const opRef = useRef(null);
 
   const togglerIcon = (node, options) => {
     if (!node.children) {
@@ -28,7 +34,14 @@ export const TreeTableComponent = (props) => {
   };
 
   const nodeTemplate = (node, options) => {
-    console.log(node.data.type, "EE")
+    console.log("Уровень вложенности:", node);
+  
+    let label = node.data.name;
+  
+    if (node.data.type === "Assessment" || node.data.type === "Risk-transfer") {
+      label = node.data.type;
+    }
+  
     return (
       <div onClick={() => props.setSelectedNode(node)} className={styles.RowFlex}>
         <div style={{
@@ -42,33 +55,99 @@ export const TreeTableComponent = (props) => {
           {ICONS[node.data.type]}
         </div>
         <span className={styles.Row}>
-          {node.data.name}
-          {node.data.tags ? <span style={{ color: "#213b7b", fontWeight: "bold", }}>
-            {` (${node.data.tags.map(tag => tag.toUpperCase()).join(",")})`}
-          </span> : null}
+          {label}
+          {node.data.tags ? (
+            <span style={{ color: "#213b7b", fontWeight: "bold" }}>
+              {node.data.tags.map((tag, i) => {
+                const label = tag.label.toUpperCase();
+                return (
+                  <React.Fragment key={i}>
+                    {i === 0 && <span>{"("}</span>}
+                    <span style={{ color: tag.color }}>{label}</span>
+                    {i < node.data.tags.length - 1 && <span>,</span>}
+                    {i === node.data.tags.length - 1 && <span>{")"}</span>}
+                  </React.Fragment>
+                );
+              })}
+            </span>
+          ) : null}
         </span>
         <i
           className={`pi pi-ellipsis-v ${styles.ActionIcon}`}
-          style={{ cursor: 'pointer', padding: '0 0.5rem' }}
+          style={{
+            cursor: 'pointer',
+            padding: '0px',
+          }}
           onClick={(e) => handleMenuClick(e, node)}
         />
       </div>
     );
   };
-
+  
   const onDragDrop = (event) => {
     setNodes(event.value);
   };
 
+  const getOptionsForOverlay = () => {
+    const closeOptionsHandler = () => opRef.current.toggle(false)
+
+    if (!props.selectedNode) {
+      return null;
+    }
+
+    if (props.selectedNode.data.type !== "Assessment") {
+      return (
+        <div onClick={closeOptionsHandler} className={styles.overlayOption}>
+          + Create new org-node
+        </div>
+      )
+    }
+
+
+    return (
+      <>
+        <div onClick={closeOptionsHandler} className={styles.overlayOption}>
+          print report
+        </div>
+        {props.selectedNode.data.status == "Open" ? (
+          <div onClick={closeOptionsHandler} className={styles.overlayOption}>open</div>
+        ) : null}
+        <div onClick={closeOptionsHandler} className={styles.overlayOption}>view</div>
+      </>
+    )
+  }
+
+  const handleMenuClick = (event, node) => {
+    opRef.current.toggle(event);
+  };
+
   return (
-    <Tree
-      className={styles.Tree}
-      value={nodes}
-      nodeTemplate={nodeTemplate}
-      dragdropScope="demo"
-      onDragDrop={onDragDrop}
-      togglerTemplate={togglerIcon}
-    />
+    <>
+      <OverlayPanel className={styles.customOverlay} ref={opRef}>
+        <div
+          style={{
+            cursor: 'pointer'
+          }}
+          onClick={() => setModalVisible(true)}
+        >
+          {getOptionsForOverlay()}
+        </div>
+      </OverlayPanel>
+      <CreateNewOrgNode nodes={nodes} selectedNode={props.selectedNode} setNodes={setNodes} setModalVisible={setModalVisible}  isModalVisible={modalVisible} />
+      <Tree
+        style={{
+          border: "0px",
+          paddingLeft: "10px"
+        }}
+        selectionMode="single"
+        className={styles.Tree}
+        value={nodes}
+        nodeTemplate={nodeTemplate}
+        dragdropScope="demo"
+        onDragDrop={onDragDrop}
+        togglerTemplate={togglerIcon}
+      />
+    </>
   );
 };
 
@@ -276,20 +355,20 @@ export const TreeTableComponent = (props) => {
 //     </div>
 //   );
 
-//   const getOptionsForOverlay = () => {
-//     const closeOptionsHandler = () => opRef.current.toggle(false)
+// const getOptionsForOverlay = () => {
+//   const closeOptionsHandler = () => opRef.current.toggle(false)
 
-//     if (!selectedNode) {
-//       return null;
-//     }
+//   if (!selectedNode) {
+//     return null;
+//   }
 
-//     if (selectedNode.data.type === "Location") {
-//       return (
-//         <div onClick={closeOptionsHandler} className={styles.overlayOption}>
-//           + Create new org-node
-//         </div>
-//       )
-//     }
+//   if (selectedNode.data.type === "Location") {
+//     return (
+//       <div onClick={closeOptionsHandler} className={styles.overlayOption}>
+//         + Create new org-node
+//       </div>
+//     )
+//   }
 
 
 //     return (
@@ -398,16 +477,16 @@ export const TreeTableComponent = (props) => {
 //           width: "5%"
 //         }} body={actionTemplate} />
 //       </TreeTable> */}
-//       <OverlayPanel className={styles.customOverlay} ref={opRef}>
-//         <div
-//           style={{
-//             cursor: 'pointer'
-//           }}
-//           onClick={() => setModalVisible(true)}
-//         >
-//           {getOptionsForOverlay()}
-//         </div>
-//       </OverlayPanel>
+// <OverlayPanel className={styles.customOverlay} ref={opRef}>
+//   <div
+//     style={{
+//       cursor: 'pointer'
+//     }}
+//     onClick={() => setModalVisible(true)}
+//   >
+//     {getOptionsForOverlay()}
+//   </div>
+// </OverlayPanel>
 
 //     </div>
 //   );
