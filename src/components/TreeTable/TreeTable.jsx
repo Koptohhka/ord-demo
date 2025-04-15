@@ -43,7 +43,10 @@ export const TreeTableComponent = (props) => {
     }
   
     return (
-      <div onClick={() => props.setSelectedNode(node)} className={styles.RowFlex}>
+      <div onClick={() => {
+        if (node.data.type === "Risk-transfer") return;
+        props.setSelectedNode(node)
+      }} className={styles.RowFlex}>
         <div style={{
           width: "25px",
           height: "25px",

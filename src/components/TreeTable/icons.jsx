@@ -10,5 +10,6 @@ export const ICONS = {
     Organization: <OrganizationIcon fill="#c8bdc1" width={"100%"} height={"100%"} />,
     Entity: <EntityIcon fill="#bac7d8" width={"100%"} height={"100%"} />,
     Division: <DivisionIcon width={"100%"} height={"100%"} />,
-    Assessment: <AssessmentIcon width={"100%"} height={"100%"} />
+    Assessment: <AssessmentIcon width={"100%"} height={"100%"} />,
+    "Risk-transfer": <AssessmentIcon width={"100%"} height={"100%"} />,
 };

@@ -102,15 +102,15 @@ export const TREE_DATA = [
                   type: "Assessment"
                 },
               },
-              // {
-              //   key: "rnd-center-graz-a3",
-              //   data: {
-              //     author: ' ',
-              //     dates: { startDate: ' ', endDate: ' ' },
-              //     status: ' ',
-              //     type: "Risk-transfer"
-              //   },
-              // }
+              {
+                key: "rnd-center-graz-a3",
+                data: {
+                  author: ' ',
+                  dates: { startDate: ' ', endDate: ' ' },
+                  status: ' ',
+                  type: "Risk-transfer"
+                },
+              }
             ]
           }, {
             key: "manufacturing-plants",
